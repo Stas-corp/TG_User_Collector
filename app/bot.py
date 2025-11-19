@@ -4,6 +4,8 @@ from aiogram.client.default import DefaultBotProperties
 
 from app.handlers import start
 from app.config import settings
+from app.middleware.database import DatabaseMiddleware
+
 
 bot = Bot(
     token=settings.BOT_TOKEN,
@@ -12,3 +14,5 @@ bot = Bot(
 dp = Dispatcher()
 
 dp.include_router(start.router)
+
+dp.update.middleware(DatabaseMiddleware())

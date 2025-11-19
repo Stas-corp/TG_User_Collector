@@ -55,15 +55,22 @@ class UserChat(Base):
     __tablename__ = "user_chats"
     
     user_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("users.telegram_user_id"), primary_key=True
+        BigInteger, 
+        ForeignKey("users.telegram_user_id"), 
+        primary_key=True
     )
+    
     chat_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("chats.chat_id"), primary_key=True
+        BigInteger, 
+        ForeignKey("chats.chat_id"), 
+        primary_key=True
     )
+    
     first_seen_at: Mapped[datetime] = mapped_column(
         DateTime, 
         default=datetime.now(UTC)
     )
+    
     last_seen_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.now(UTC), 

@@ -1,6 +1,7 @@
 import asyncio
 import logging
 
+from app.bot import dp, bot
 from app.config import settings
 from app.database.engine import init_db
 
@@ -14,6 +15,9 @@ async def main() -> None:
     
     await init_db()
     logger.info("Database initialized")
+    
+    logger.info("Starting bot with polling...")
+    await dp.start_polling(bot, skip_updates=True)
 
 
 if __name__ == "__main__":

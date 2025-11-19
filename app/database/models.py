@@ -19,9 +19,13 @@ class User(Base):
     language_code: Mapped[Optional[str]] = mapped_column(String(10))
     is_bot: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(default=datetime.now(UTC)))
+        DateTime, 
+        default=datetime.now(UTC)
+    )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(default=datetime.now(UTC), onupdate=datetime.now(UTC))
+        DateTime, 
+        default=datetime.now(UTC), 
+        onupdate=datetime.now(UTC)
     )
     
     user_chats: Mapped[List["UserChat"]] = relationship(back_populates="user")
@@ -35,9 +39,13 @@ class Chat(Base):
     title: Mapped[Optional[str]] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(default=datetime.now(UTC)))
+        DateTime, 
+        default=datetime.now(UTC)
+    )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(default=datetime.now(UTC), onupdate=datetime.now(UTC))
+        DateTime, 
+        default=datetime.now(UTC), 
+        onupdate=datetime.now(UTC)
     )
     
     user_chats: Mapped[List["UserChat"]] = relationship(back_populates="chat")
@@ -52,9 +60,14 @@ class UserChat(Base):
     chat_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("chats.chat_id"), primary_key=True
     )
-    first_seen_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(UTC))
+    first_seen_at: Mapped[datetime] = mapped_column(
+        DateTime, 
+        default=datetime.now(UTC)
+    )
     last_seen_at: Mapped[datetime] = mapped_column(
-        DateTime(default=datetime.now(UTC), onupdate=datetime.now(UTC))
+        DateTime,
+        default=datetime.now(UTC), 
+        onupdate=datetime.now(UTC)
     )
     
     user: Mapped["User"] = relationship(back_populates="user_chats")

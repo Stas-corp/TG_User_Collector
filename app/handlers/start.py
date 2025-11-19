@@ -5,7 +5,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database.operations import upsert_chat, upsert_user
+from app.database.operations import upsert_chat, upsert_user, upsert_user_chat
 
 router = Router()
 
@@ -27,8 +27,9 @@ async def cmd_start(message: Message, session: AsyncSession):
     }
     logging.info(f"Data\nUser_data:{user_data}\nChat_data:{chat_data}")
     
-    await upsert_user(session, user_data)
-    await upsert_chat(session, chat_data)
+    user = await upsert_user(session, user_data)
+    chat = await upsert_chat(session, chat_data)
+    await upsert_user_chat(session, user.telegram_user_id, chat.chat_id)
     logging.info("DB write OK")
     
     await message.answer('Ok')

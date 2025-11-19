@@ -1,8 +1,9 @@
 from datetime import datetime, UTC
 
+from sqlalchemy import Select, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database.models import Chat, User
+from app.database.models import Chat, User, UserChat
 
 
 async def upsert_user(session: AsyncSession, data: dict) -> User:
@@ -33,3 +34,19 @@ async def upsert_chat(session: AsyncSession, data: dict) -> Chat:
     await session.commit()
     await session.refresh(chat)
     return chat
+
+
+async def upsert_user_chat(session: AsyncSession, user_id: int, chat_id: int) -> UserChat:
+    stmt: Select = select(UserChat).where(
+        UserChat.user_id == user_id, UserChat.chat_id == chat_id
+    )
+    res = await session.execute(stmt)
+    uc: UserChat = res.scalar_one_or_none()
+    if uc:
+        uc.last_seen_at = datetime.now(UTC)
+    else:
+        uc = UserChat(user_id=user_id, chat_id=chat_id)
+        session.add(uc)
+    await session.commit()
+    await session.refresh(uc)
+    return uc

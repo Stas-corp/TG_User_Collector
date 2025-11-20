@@ -19,11 +19,11 @@ class User(Base):
     language_code: Mapped[Optional[str]] = mapped_column(String(10))
     is_bot: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, 
+        DateTime(timezone=True), 
         default=datetime.now(UTC)
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, 
+        DateTime(timezone=True), 
         default=datetime.now(UTC), 
         onupdate=datetime.now(UTC)
     )
@@ -39,11 +39,11 @@ class Chat(Base):
     title: Mapped[Optional[str]] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, 
+        DateTime(timezone=True), 
         default=datetime.now(UTC)
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, 
+        DateTime(timezone=True), 
         default=datetime.now(UTC), 
         onupdate=datetime.now(UTC)
     )
@@ -67,12 +67,12 @@ class UserChat(Base):
     )
     
     first_seen_at: Mapped[datetime] = mapped_column(
-        DateTime, 
+        DateTime(timezone=True), 
         default=datetime.now(UTC)
     )
     
     last_seen_at: Mapped[datetime] = mapped_column(
-        DateTime,
+        DateTime(timezone=True),
         default=datetime.now(UTC), 
         onupdate=datetime.now(UTC)
     )

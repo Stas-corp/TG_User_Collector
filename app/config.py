@@ -6,9 +6,9 @@ class Settings(BaseSettings):
     
     BOT_TOKEN: str
     
-    DATABASE_URL: str = "sqlite+aiosqlite:///./bot.db"
+    DATABASE_URL: str
     
-    LOG_LEVEL: str = "INFO"
+    LOG_LEVEL: str
 
 
 settings = Settings()

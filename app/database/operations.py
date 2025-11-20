@@ -50,3 +50,7 @@ async def upsert_user_chat(session: AsyncSession, user_id: int, chat_id: int) ->
     await session.commit()
     await session.refresh(uc)
     return uc
+
+
+async def get_user_by_id(session: AsyncSession, user_id: int) -> User:
+    return await session.get(User, user_id)

@@ -11,7 +11,7 @@ router = Router()
 
 
 @router.message(Command("start"))
-async def cmd_start(message: Message, session: AsyncSession):
+async def cmd_start(message: Message, session: AsyncSession, get_text: callable):
     user_data = {
         "telegram_user_id": message.from_user.id,
         "username": message.from_user.username,
@@ -32,4 +32,4 @@ async def cmd_start(message: Message, session: AsyncSession):
     await upsert_user_chat(session, user.telegram_user_id, chat.chat_id)
     logging.info("DB write OK")
     
-    await message.answer('Ok')
+    await message.answer(get_text("start_greeting").format(name=message.from_user.full_name))
